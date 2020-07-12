@@ -69,7 +69,7 @@ router.put('/products/:id', async (req, res) => {
 
 router.delete('/products/:id', async (req, res) => {
   try {
-    const dep = await(Products.findById(req.param.id));
+    const dep = await(Products.findById(req.params.id));
     if(dep) {
       await Products.delateOne({_id: req.param.id});
       res.json({ message: 'OK'});

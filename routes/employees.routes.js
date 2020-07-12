@@ -68,7 +68,7 @@ router.put('/employees/:id', async (req, res) => {
 
 router.delete('/employees/:id', async (req, res) => {
   try {
-    const dep = await(Employees.findById(req.param.id));
+    const dep = await(Employees.findById(req.params.id));
     if(dep) {
       await Employees.delateOne({_id: req.param.id});
       res.json({ message: 'OK'});
