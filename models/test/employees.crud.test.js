@@ -20,32 +20,42 @@ describe("Employees", () => {
   });
   describe("Reading data", () => {
     beforeEach(async () => {
-      const testEmpOne = new Employee({
+      const test1 = new Employee({
         firstName: "Joe",
         lastName: "Doe",
         department: "HR",
       });
-      await testEmpOne.save();
+      await test1.save();
 
-      const testEmpTwo = new Employee({
+      const test2 = new Employee({
         firstName: "Amanda",
         lastName: "Doe",
         department: "Managment",
       });
-      await testEmpTwo.save();
-      
+      await test2.save();
     });
+
     it('should return all the data with "find" method', async () => {
-      const employee = await Employee.find();
+      const employees = await Employee.find();
       const expectedLength = 2;
-      expect(employee.length).to.be.equal(expectedLength);
+
+      expect(employees.length).to.be.equal(expectedLength);
     });
 
     it('should return proper document by various params with "findOne" method.', async () => {
       const employee = await Employee.findOne({
         firstName: "Joe",
       });
+      const employee2 = await Employee.findOne({
+        lastName: "Doe",
+      });
+      const employee3 = await Employee.findOne({
+        department: "HR",
+      });
+
       expect(employee.firstName).to.be.equal("Joe");
+      expect(employee2.lastName).to.be.equal("Doe");
+      expect(employee3.department).to.be.equal("HR");
     });
     after(async () => {
       await Employee.deleteMany();
@@ -106,12 +116,12 @@ describe("Employees", () => {
     });
 
     it('should properly update many docs with "updateMany" method', async () => {
-        await Employee.updateMany({}, { $set: { firstName: 'Lilly' }});
-        const employees = await Employee.find();
-  
-        expect(employees[0].firstName).to.be.equal('Lilly');
-        expect(employees[1].firstName).to.be.equal('Lilly');
-      });
+      await Employee.updateMany({}, { $set: { firstName: "Lilly" } });
+      const employees = await Employee.find();
+
+      expect(employees[0].firstName).to.be.equal("Lilly");
+      expect(employees[1].firstName).to.be.equal("Lilly");
+    });
 
     afterEach(async () => {
       await Employee.deleteMany();
