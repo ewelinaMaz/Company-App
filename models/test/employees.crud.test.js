@@ -18,6 +18,7 @@ describe("Employees", () => {
       console.log(err);
     }
   });
+
   describe("Reading data", () => {
     beforeEach(async () => {
       const test1 = new Employee({
@@ -36,10 +37,14 @@ describe("Employees", () => {
     });
 
     it('should return all the data with "find" method', async () => {
-      const employees = await Employee.find();
-      const expectedLength = 2;
+      try {
+        const employees = await Employee.find();
+        const expectedLength = 2;
 
-      expect(employees.length).to.be.equal(expectedLength);
+        expect(employees.length).to.be.equal(expectedLength);
+      } catch (err) {
+        console.log(err);
+      }
     });
 
     it('should return proper document by various params with "findOne" method.', async () => {
